@@ -63,18 +63,19 @@ The interface is designed to be clean, simple, and modern, using Bootstrap 5 for
     pip install -r requirements.txt
     ```
 
-4.  **Run the application:**
+4. **Switch to development branch:**
+
+    Make sure HEAD is on the dev branch to be able to run the application locally.
+    ```bash
+    git switch dev
+    ```
+
+5.  **Run the application:**
     ```bash
     python app.py
     ```
     The application will start in debug mode (useful for development).
 
-5. **Switch to development branch:**
-
-    Locally, make sure HEAD is on the dev branch to be able to run the application.
-    ```bash
-    git switch dev
-    ```
 
 5.  **Access the application:**
     Open your web browser and navigate to `http://127.0.0.1:5000`.
