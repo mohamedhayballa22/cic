@@ -159,6 +159,3 @@ def calculate():
 @app.context_processor
 def inject_now():
     return {'now': date.today()}
-
-if __name__ == '__main__':
-    app.run(debug=True)
