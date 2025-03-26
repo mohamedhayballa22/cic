@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Calculateur d'Intéressement - Saisie{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Calculateur d'Intéressement Collectif 2024</h2>
+
+{% if error %}
+<div class="alert alert-danger" role="alert">
+  Erreur : {{ error }}
+</div>
+{% endif %}
+
+
+<form action="{{ url_for('calculate') }}" method="post" id="interessementForm">
+    <div class="mb-3">
+        <label for="salaire_mensuel" class="form-label">Salaire Mensuel Brut (€)</label>
+        <input type="number" step="0.01" class="form-control" id="salaire_mensuel" name="salaire_mensuel" value="{{ request.form.salaire_mensuel }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="absences_ouvrees" class="form-label">Nombre de jours d'absence (ouvrés) en 2024</label>
+        <input type="number" class="form-control" id="absences_ouvrees" name="absences_ouvrees" value="{{ request.form.absences_ouvrees if request.form.absences_ouvrees is not none else 0 }}" required>
+        <small class="form-text text-muted">Inclure congés sans solde, maladie non maintenue, etc.</small>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Êtes-vous entré(e) dans l'entreprise en 2024 ?</label>
+        <div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="entered_in_2024" id="entry_yes" value="yes" {% if request.form.entered_in_2024 == 'yes' %}checked{% endif %}>
+                <label class="form-check-label" for="entry_yes">Oui</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="entered_in_2024" id="entry_no" value="no" {% if request.form.entered_in_2024 == 'no' or request.form.entered_in_2024 is none %}checked{% endif %}>
+                <label class="form-check-label" for="entry_no">Non</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3" id="date_entree_group">
+        <label for="date_entree_str" class="form-label">Date d'entrée en 2024</label>
+        <input type="text" class="form-control" id="date_entree_str" name="date_entree_str" placeholder="JJ/MM/AAAA" value="{{ request.form.date_entree_str }}">
+        <small class="form-text text-muted">Format: Jour/Mois/Année (ex: 15/02/2024)</small>
+    </div>
+
+    <div class="mb-3">
+        <label for="date_sortie_str" class="form-label">Date de sortie (si applicable, sinon laisser fin d'année)</label>
+        <input type="text" class="form-control" id="date_sortie_str" name="date_sortie_str" placeholder="JJ/MM/AAAA" value="{{ request.form.date_sortie_str if request.form.date_sortie_str else '31/12/2024' }}" required>
+         <small class="form-text text-muted">Format: Jour/Mois/Année. Laissez 31/12/2024 si présent toute l'année.</small>
+    </div>
+
+
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-calculate btn-lg">Calculer l'Intéressement</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Script to show/hide entry date based on radio button selection
+    const entryYesRadio = document.getElementById('entry_yes');
+    const entryNoRadio = document.getElementById('entry_no');
+    const dateEntreeGroup = document.getElementById('date_entree_group');
+    const dateEntreeInput = document.getElementById('date_entree_str');
+
+    function toggleDateEntree() {
+        if (entryYesRadio.checked) {
+            dateEntreeGroup.style.display = 'block';
+            dateEntreeInput.required = true;
+        } else {
+            dateEntreeGroup.style.display = 'none';
+            dateEntreeInput.required = false;
+            dateEntreeInput.value = '';
+        }
+    }
+
+    // Add event listeners
+    entryYesRadio.addEventListener('change', toggleDateEntree);
+    entryNoRadio.addEventListener('change', toggleDateEntree);
+
+    // Initial check when the page loads
+    document.addEventListener('DOMContentLoaded', toggleDateEntree);
+</script>
+{% endblock %}

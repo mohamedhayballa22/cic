@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Calculateur d'Intéressement - Résultat{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Résultat de l'Estimation</h2>
+
+<div class="card">
+    <div class="card-header">
+        Vos estimations d'intéressement pour 2024
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            Estimation brute :
+            <span class="badge bg-primary rounded-pill fs-6">
+                {{ results['Estimation brute (€)'] | decimal_fr }} €
+            </span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            Estimation nette :
+             <span class="badge bg-success rounded-pill fs-6">
+                {{ results['Estimation nette (€)'] | decimal_fr }} €
+             </span>
+        </li>
+    </ul>
+    <div class="card-body text-muted">
+        <small>
+            Ces montants sont des estimations basées sur les données fournies et les paramètres globaux actuels. Ils sont susceptibles de varier.
+        </small>
+        <hr>
+         <p><strong>Paramètres utilisés pour le calcul :</strong></p>
+         <ul>
+            <li>Salaire mensuel : {{ inputs['salaire_mensuel'] | decimal_fr }} €</li>
+            <li>Absences (jours ouvrés) : {{ inputs['absences_ouvrees'] }}</li>
+            <li>Date d'entrée considérée : {{ inputs['date_entree_str'] }}</li>
+            <li>Date de sortie considérée : {{ inputs['date_sortie_str'] }}</li>
+            <li>Ratio présence calendaire : {{ debug_info['ratio_presence_calendaire'] | decimal_fr(4) }}</li>
+             <li>Ratio présence jours ouvrés réels : {{ debug_info['presence_ratio'] | decimal_fr(4) }}</li>
+             <li>Salaire annuel base calcul : {{ debug_info['salaire_annuel'] | decimal_fr }} €</li>
+         </ul>
+    </div>
+    <div class="card-footer text-center">
+         <a href="{{ url_for('index') }}" class="btn btn-secondary">Effectuer un nouveau calcul</a>
+    </div>
+</div>
+
+
+{% endblock %}
