@@ -111,7 +111,10 @@
     entryYesRadio.addEventListener('change', toggleDateEntree);
     entryNoRadio.addEventListener('change', toggleDateEntree);
 
-    // Initial check when the page loads
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+
     document.addEventListener('DOMContentLoaded', toggleDateEntree);
+
 </script>
 {% endblock %}
