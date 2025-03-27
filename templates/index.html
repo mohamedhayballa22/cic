@@ -14,12 +14,44 @@
 
 <form action="{{ url_for('calculate') }}" method="post" id="interessementForm">
     <div class="mb-3">
-        <label for="salaire_mensuel" class="form-label">Salaire Mensuel Brut (€)</label>
+        <label for="salaire_mensuel" class="form-label">
+            Salaire Mensuel Brut (€)
+            <i class="bi bi-info-circle-fill ms-1"
+               style="cursor: pointer; color: #f26522;"
+               data-bs-toggle="popover"
+               data-bs-trigger="hover focus"
+               data-bs-placement="right"
+               data-bs-html="true"
+               title="Source"
+               data-bs-content="Informations à récupérer sur la ligne « Rémunération brute » de votre fiche de paie."></i>
+        </label>
         <input type="number" step="0.01" class="form-control" id="salaire_mensuel" name="salaire_mensuel" value="{{ request.form.salaire_mensuel }}" required>
     </div>
 
     <div class="mb-3">
-        <label for="absences_ouvrees" class="form-label">Nombre de jours d'absence (ouvrés) en 2024</label>
+        <label for="absences_ouvrees" class="form-label">
+            Nombre de jours d'absence (ouvrés) en 2024
+            <i class="bi bi-info-circle-fill ms-1"
+               style="cursor: pointer; color: #f26522;"
+               data-bs-toggle="popover"
+               data-bs-trigger="hover focus"
+               data-bs-placement="right"
+               data-bs-html="true"
+               title="Quelles absences NE PAS compter ?"
+               data-bs-content="
+                   Les jours suivants sont considérés comme du temps de présence et ne doivent <strong>pas</strong> être comptés comme des jours d'absence dans ce simulateur :
+                   <ul>
+                       <li>Congés légaux et conventionnels pour événements familiaux</li>
+                       <li>Congé de maternité, paternité et d'adoption</li>
+                       <li>Congé de formation ou lié au projet de transition professionnelle</li>
+                       <li>Suspension pour accident du travail ou maladie professionnelle (hors accidents de trajet et rechutes liées à un AT chez un employeur précédent)</li>
+                       <li>Placement en activité partielle</li>
+                       <li>Mise en quarantaine au sens du 3° du I de l'art. L. 3131-15 du code de santé publique ; congé lié au projet de transition professionnelle.</li>
+                       <li>Congé de proche aidant selon les conditions fixées par la loi. </li>
+                       <li>Période assimilée par le code du travail à du temps de travail effectif et rémunérées comme tel.</li>
+                   </ul>
+               "></i>
+        </label>
         <input type="number" class="form-control" id="absences_ouvrees" name="absences_ouvrees" value="{{ request.form.absences_ouvrees if request.form.absences_ouvrees is not none else 0 }}" required>
         <small class="form-text text-muted">Inclure congés sans solde, maladie non maintenue, etc.</small>
     </div>
@@ -38,7 +70,7 @@
         </div>
     </div>
 
-    <div class="mb-3" id="date_entree_group">
+    <div class="mb-3" id="date_entree_group" style="display: none;">
         <label for="date_entree_str" class="form-label">Date d'entrée en 2024</label>
         <input type="text" class="form-control" id="date_entree_str" name="date_entree_str" placeholder="JJ/MM/AAAA" value="{{ request.form.date_entree_str }}">
         <small class="form-text text-muted">Format: Jour/Mois/Année (ex: 15/02/2024)</small>
