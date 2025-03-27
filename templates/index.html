@@ -75,13 +75,6 @@
         <small class="form-text text-muted">Format: Jour/Mois/Année (ex: 15/02/2024)</small>
     </div>
 
-    <div class="mb-3">
-        <label for="date_sortie_str" class="form-label">Date de sortie (si applicable, sinon laisser fin d'année)</label>
-        <input type="text" class="form-control" id="date_sortie_str" name="date_sortie_str" placeholder="JJ/MM/AAAA" value="{{ request.form.date_sortie_str if request.form.date_sortie_str else '31/12/2024' }}" required>
-         <small class="form-text text-muted">Format: Jour/Mois/Année. Laissez 31/12/2024 si présent toute l'année.</small>
-    </div>
-
-
     <div class="d-grid gap-2">
         <button type="submit" class="btn btn-calculate btn-lg">Calculer l'Intéressement</button>
     </div>
