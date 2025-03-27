@@ -13,3 +13,19 @@
   .btn-calculate:focus {
     box-shadow: 0 0 0 0.25rem rgba(231, 91, 36, 0.5);
   }
+
+  .badge {
+    background-color: #f26522 !important;
+    color: #ffffff !important;
+  }
+.badge {
+  background-color: #f26522 !important;
+  color: #ffffff !important;
+}
+
+.card-body small {
+  color: #f26522;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  }
