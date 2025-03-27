@@ -1,12 +1,12 @@
 .btn-calculate {
-    background-color: #e75b24;
-    border-color: #e75b24;
+    background-color: #f26522;
+    border-color: #f26522;
     color: #ffffff;
   }
   
   .btn-calculate:hover {
-    background-color: #c94a1e;
-    border-color: #c0471c;
+    background-color: #d6581e;
+    border-color: #d6581e;
     color: #ffffff;
   }
   
@@ -28,4 +28,4 @@
   font-weight: bold;
   display: block;
   text-align: center;
-  }
+}
