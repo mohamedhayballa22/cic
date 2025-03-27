@@ -28,6 +28,7 @@ ANNEE_DEBUT_CALCUL = datetime.strptime("01/01/2024", "%d/%m/%Y")
 ANNEE_FIN_CALCUL = datetime.strptime("31/12/2024", "%d/%m/%Y")
 JOURS_ANNEE_CALCUL = (ANNEE_FIN_CALCUL - ANNEE_DEBUT_CALCUL).days + 1
 NET_FACTOR = 0.908
+DATE_LIMITE_ENTREE = datetime(2024, 9, 30)
 
 
 def calculate_interessement(salaire_mensuel, absences_ouvrees, date_entree_str, date_sortie_str):
@@ -42,6 +43,10 @@ def calculate_interessement(salaire_mensuel, absences_ouvrees, date_entree_str, 
 
         if date_entree.year != 2024:
             raise ValueError("La date d'entrée doit être en 2024")
+
+        if date_entree > DATE_LIMITE_ENTREE:
+            raise ValueError("Selon les règles définies, aucun intéressement n'est versé pour une date d'entrée dans l'entreprise postérieure au 30 Septembre 2024.")
+
 
         # --- Calculations ---
 
@@ -148,7 +153,6 @@ def calculate():
         return render_template('index.html', error=f"Une erreur inattendue est survenue: {e}", now=date.today())
 
 
-# Add context processor to make 'now' available globally in templates if needed often
 @app.context_processor
 def inject_now():
     return {'now': date.today()}
