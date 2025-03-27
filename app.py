@@ -40,12 +40,8 @@ def calculate_interessement(salaire_mensuel, absences_ouvrees, date_entree_str, 
         date_entree = datetime.strptime(date_entree_str, "%d/%m/%Y")
         date_sortie = datetime.strptime(date_sortie_str, "%d/%m/%Y")
 
-        # Ensure dates are within the calculation year (2024)
-        date_entree = max(date_entree, ANNEE_DEBUT_CALCUL)
-        date_sortie = min(date_sortie, ANNEE_FIN_CALCUL)
-
-        if date_entree > date_sortie:
-             raise ValueError("La date d'entrée ne peut pas être postérieure à la date de sortie.")
+        if date_entree.year != 2024:
+            raise ValueError("La date d'entrée doit être en 2024")
 
         # --- Calculations ---
 
@@ -91,7 +87,7 @@ def calculate_interessement(salaire_mensuel, absences_ouvrees, date_entree_str, 
 
     except ValueError as ve:
         # Handle date parsing errors or logical errors like entry > exit
-        return None, None, f"Erreur de données : {ve}"
+        return None, None, ve
     except Exception as e:
         # Handle other potential errors (e.g., calculation issues)
         # Log the error
@@ -110,10 +106,7 @@ def calculate():
         salaire_mensuel = float(request.form['salaire_mensuel'])
         absences_ouvrees = int(request.form['absences_ouvrees'])
         entered_in_2024 = request.form.get('entered_in_2024')
-        date_sortie_str = request.form['date_sortie_str']
-
-        if not date_sortie_str: # Default if empty
-             date_sortie_str = "31/12/2024"
+        date_sortie_str = "31/12/2024"
 
         if entered_in_2024 == 'yes':
             date_entree_str = request.form['date_entree_str']
